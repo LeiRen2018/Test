@@ -1,0 +1,97 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TreeDaTableHtml"
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" x:Class="TreeDaTableHtml.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Loaded="Window_Loaded" 
+    xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys">
+    <Window.Resources >
+        <DataTemplate x:Key="CellTemplate_Order1">
+            <TreeView x:Name="departmentTree" Grid.Row="1"  SelectedItemChanged="departmentTree_SelectedItemChanged" >
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding item}">
+                        <StackPanel>
+                            <TextBlock VerticalAlignment="Center" FontSize="14" Text="{Binding Name}" Margin="2,0,0,0"></TextBlock>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <dxg:TreeListControl Name="TreeList1" ItemsSource="{Binding _item}" Visibility="Hidden">
+            <dxg:TreeListControl.Columns>
+                <dxg:TreeListColumn FieldName="TeacherName" Header="老师"/>
+                <dxg:TreeListColumn FieldName="StudentName" Header="姓名"/>
+                <dxg:TreeListColumn  Header="树" >
+                    <dxg:TreeListColumn.CellTemplate >
+                        <DataTemplate>
+                            <TreeView>
+                                <TreeViewItem Header="系统设置">
+                                    <TreeViewItem Header="通信配置"/>
+                                    <TreeViewItem Header="接收器配置"/>
+                                    <TreeViewItem Header="回路配置"/>
+                                    <TreeViewItem Header="控制单元配置"/>
+                                    <TreeViewItem Header="区域配置"/>
+                                    <TreeViewItem Header="区域平面分布图配置"/>
+                                    <TreeViewItem Header="场景配置"/>
+                                    <TreeViewItem Header="定时任务配置"/>
+                                    <TreeViewItem Header="定时任务特殊情况配置"/>
+                                </TreeViewItem>
+                            </TreeView>
+                        </DataTemplate>
+                    </dxg:TreeListColumn.CellTemplate>
+                </dxg:TreeListColumn>
+                <!--<GridViewColumn Header="材料名称及规格" >
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Type , Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>-->
+                <dxg:TreeListColumn FieldName="StudentAge" Header="年龄"/>
+                <dxg:TreeListColumn FieldName="StudentAddress" Header="地址"/>
+            </dxg:TreeListControl.Columns>
+            <dxg:TreeListControl.View>
+                <dxg:TreeListView Name="TreeListView1"  KeyFieldName="StudentID" ParentFieldName="TeacherID" />
+            </dxg:TreeListControl.View>
+        </dxg:TreeListControl>
+
+        <dxg:GridControl  x:Name="GridTab" Visibility="Hidden">
+            <dxg:GridControl.View >
+                <dxg:TableView Name="SummaryTable"  AutoWidth="True" AllowMoveColumnToDropArea="False"/>
+            </dxg:GridControl.View>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn   Header="楼层" Binding="{Binding StudentName}" ReadOnly="True"/>
+                <dxg:GridColumn   Header="类型" Binding="{Binding StudentAge}" ReadOnly="True"/>
+                <dxg:GridColumn   Header="级别" >
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <TreeView>
+                                <TreeViewItem Header="系统设置">
+                                    <TreeViewItem Header="通信配置"/>
+                                    <TreeViewItem Header="接收器配置"/>
+                                    <TreeViewItem Header="回路配置"/>
+                                    <TreeViewItem Header="控制单元配置"/>
+                                    <TreeViewItem Header="区域配置"/>
+                                    <TreeViewItem Header="区域平面分布图配置"/>
+                                    <TreeViewItem Header="场景配置"/>
+                                    <TreeViewItem Header="定时任务配置"/>
+                                    <TreeViewItem Header="定时任务特殊情况配置"/>
+                                </TreeViewItem>
+                            </TreeView>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn   Header="直径(mm)" Binding="{Binding StudentAddress}" ReadOnly="True" />
+                <dxg:GridColumn   Header="总长(m)" Binding="{Binding TeacherID,StringFormat={}{0:###.###}}" ReadOnly="True"/>
+                <dxg:GridColumn   Header="总重(t)" Binding="{Binding TeacherName,StringFormat={}{0:###.###}}" ReadOnly="True" />
+            </dxg:GridControl.Columns>
+            
+        </dxg:GridControl>
+
+    </Grid>
+</Window>
